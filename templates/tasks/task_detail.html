@@ -1,0 +1,6 @@
+{% extends 'base.html' %}
+{% block content %}
+  <h1>{{ task.name }}</h1>
+  <h2>{{ task.description }}</h2>
+  <h2><a href="/edit{{ task.get_absolute_url }}">Редактировать задачу</a></h2>
+{% endblock content %}

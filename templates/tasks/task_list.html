@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% block title %}Task List{% endblock title %}
+{% block content %}
+    {% for task in tasks %}
+      <div class="card text-dark bg-light mb-3" style="width: 40rem; margin-left: 30px;">
+          <div class="card-header"><h2 class="card-title">{{ task.name }}</h2></div>
+          <div class="card-body border-light mb-3">
+                <p class="card-text">{{ task.description }}</p>
+          </div>
+              <div class="card-footer">
+                  <table class="table">
+                      <thead>
+                        <tr>
+                            <th scope="col">Статус задачи</th>
+                            <th scope="col">Автор</th>
+                            <th scope="col">Исполнитель</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                            {% if task.status == 'not_started' %}
+                                <td class="table-warning">Не начата
+                            {% elif task.status == 'started' %}
+                                <td class="table-success">Начата
+                            {% elif task.status == 'completed' %}
+                                <td class="table-secondary">Закрыта
+                            {% elif task.status == 'reopened' %}
+                                <td class="table-danger">Переоткрыта
+                            {% endif %}
+                        </td>
+                      <td>{{ task.author__first_name }}</td>
+                      <td>{{ task.executor }}</td>
+                      </tbody>
+                  </table>
+
+                <p class="card-text">Дата создания задачи: {{ task.date_created|date:"f d/m/y" }}</p>
+                <p class="card-text">Дата изменения задачи: {{ task.date_updated|date:"f d/m/y" }}</p>
+                <a class="btn btn-primary" href="/edit{{ task.get_absolute_url }}">Редактировать</a>
+          </div>
+      </div>
+    {% endfor %}
+{% endblock content %}
